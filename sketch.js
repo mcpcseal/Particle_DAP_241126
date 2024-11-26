@@ -5,6 +5,8 @@ let g;
 let wind;
 
 let repeller;
+let repellerHitsWall = true;
+let repeller_dx, repeller_dy = 0;
 
 function setup() {
   createCanvas(720, 400);
@@ -26,7 +28,33 @@ function draw() {
     s.run();
   }
 
-  repeller.draw();
+  let fla
+  const choice = random([0, 1]);
+  if (choice == 0 && repellerHitsWall){
+    repellerHitsWall = false;
+    repeller.position.x = 0;
+    repeller.position.y = random(0, height);
+    repeller_dx = 5;
+    repeller_dy = 0;
+  }
+  if (choice == 1 && repellerHitsWall){
+    repellerHitsWall = false;
+    repeller.position.x = random(0, width);
+    repeller.position.y = 0;
+    repeller_dx = 0;
+    repeller_dy = 5;
+  }
+  repeller.position.x += repeller_dx;
+  repeller.position.y += repeller_dy;
+
+  if(repeller.position.x > width){
+    repellerHitsWall = true;
+  }
+  if(repeller.position.y > height){
+    repellerHitsWall = true;
+  }
+
+  repeller.show();
 }
 
 function mouseClicked() {
